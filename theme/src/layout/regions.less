@@ -33,3 +33,37 @@
         color: #111;
     }
 }
+
+.inner-wrap-header {
+    background-color: @darkBg;
+    color: white;
+    margin-bottom: 0;
+}
+
+.region-header-col-2 {
+    height: @magicNumber * 2;
+}
+
+.my-navbar {
+    height: @magicNumber * 2;
+    line-height: 0;
+    & li {
+        
+        &:hover {
+            .hover(@dark1, @dark3);
+        }
+    }
+}
+
+.inner-wrap-main {
+    background-color: @bgColorBody;
+    position: relative;
+    max-width: 90%;
+    // border-top-left-radius: @magicNumber;
+    // border-top-right-radius: @magicNumber;
+    border: 5px solid @bgColorBody;
+}
+
+.highlight {
+    color: #857557;
+}

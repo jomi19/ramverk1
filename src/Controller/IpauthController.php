@@ -1,6 +1,7 @@
 <?php
 
 namespace Joakim\Controller;
+
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
 
@@ -21,16 +22,17 @@ class IpauthController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
-    public function indexActionPost() {
-        $ip = $_POST["ip"];
+    public function indexActionPost() : object
+    {
+        $ipAdress = $_POST["ip"];
         $valid = false;
         $type = 6;
         $hostName = false;
 
-        if (filter_var($ip, FILTER_VALIDATE_IP)) {
-            if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+        if (filter_var($ipAdress, FILTER_VALIDATE_IP)) {
+            if (filter_var($ipAdress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
                 $type = 4;
-                $hostName = gethostbyaddr($ip);
+                $hostName = gethostbyaddr($ipAdress);
             }
             $valid = true;
         }
@@ -49,15 +51,12 @@ class IpauthController implements ContainerInjectableInterface
             "title" => "Hejsan",
 
         ]);
-
     }
-
 
     public function indexAction() : object
     {
         $title = "Stylechooser";
         $page = $this->di->get("page");
-        $session = $this->di->get("session");
 
         
         // $active = $session->get(self::$key, null);

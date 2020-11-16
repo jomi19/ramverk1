@@ -15,7 +15,7 @@ namespace Anax\View;
 <p>Here you can select among the available styles and activate them.</p>
 <form class="stylechooser" method="post" action="<?= url("style/update") ?>">
     <fieldset>
-        <legend>Stylechooser</legend>
+        <legend>Stylechooser</legend>%
         <p>
             <label for="stylechooser">Select the style to activate it:<br>
                 <select name="stylechooser" onchange="form.submit();">

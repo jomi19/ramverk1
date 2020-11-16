@@ -18,10 +18,12 @@ use function Anax\View\url;
 <form method="post" action=<?= url("ip/") ?>>
     <input type="text" name="ip">
     <input type="submit" value="Check">
-    <?php if($check) : ?>
-        <?php if($valid) : ?>
+    <input type="submit" name="ip" value="185.49.132.3">
+    <input type="submit" name="ip" value="2001:0db8:85a3:0000:0000:8a2e:0370:7334">
+    <?php if ($check) : ?>
+        <?php if ($valid) : ?>
             <p class="valid">Valid ip (IPV<?= $type ?>)</p>
-            <?php if($hostName) : ?>
+            <?php if ($hostName) : ?>
                 <p><?= $hostName ?></p>
             <?php endif; ?>
         <?php else : ?>
@@ -34,6 +36,12 @@ use function Anax\View\url;
 </form>
 
 <h2>Get Json-response</h2>
+<form method="post" action=<?= url("jsonip/") ?>>
+    <input type="text" name="ip">
+    <input type="submit" value="Check">
+    <input type="submit" name="ip" value="185.49.132.3">
+    <input type="submit" name="ip" value="2001:0db8:85a3:0000:0000:8a2e:0370:7334">
+</form>
 <h3>
        POST <?= url("jsonip")  ?>
 </h3>

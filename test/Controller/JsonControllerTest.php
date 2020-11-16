@@ -35,21 +35,21 @@ class JsonControllerTest extends TestCase
         foreach ($test as $testCase) {
             $_POST["ip"] = $testCase["ip"];
 
-            if(!$testCase["ip"]) {
+            if (!$testCase["ip"]) {
                 unset($_POST);
             }
 
             $res = $this->controller->indexActionPost();
 
             $this->assertContains($testCase["result"], $res[0]["type"]);
-            if(isset($testCase["hostName"])) {
+            if (isset($testCase["hostName"])) {
                 $this->assertContains($testCase["hostName"], $res[0]["hostName"]);
             }
         }
-
     }
 
-    public function testIndex() {
+    public function testIndex()
+    {
         $res = $this->controller->indexAction();
 
         $this->assertContains("Hej", $res);

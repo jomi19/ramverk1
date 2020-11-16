@@ -1,6 +1,7 @@
 <?php
 
 namespace Joakim\Controller;
+
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
 
@@ -21,27 +22,27 @@ class JsonController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
-    public function indexActionPost() {
+    public function indexActionPost()
+    {
         $valid = false;
         $type = "IPV6";
-        $hej = "hej";
         $hostName = false;
         $json = [ "type" => "Invalid ip"];
 
-        if(!isset($_POST["ip"])) {
+        if (!isset($_POST["ip"])) {
             $json = ["type" => "No ip"];
             return [$json];
         }
 
-        $ip = $_POST["ip"];
-        if (filter_var($ip, FILTER_VALIDATE_IP)) {
-            if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+        $ipAdress = $_POST["ip"];
+        if (filter_var($ipAdress, FILTER_VALIDATE_IP)) {
+            if (filter_var($ipAdress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
                 $type = "IPV4";
-                $hostName = gethostbyaddr($ip);
+                $hostName = gethostbyaddr($ipAdress);
             }
             $valid = true;
-            $json = ["type" => $type, 
-                "hostName" => $hostName 
+            $json = ["type" => $type,
+                "hostName" => $hostName
             ];
 
             return [$json];
@@ -49,9 +50,10 @@ class JsonController implements ContainerInjectableInterface
 
 
         return [$json];
-
     }
-    public function indexAction() {
+
+    public function indexAction()
+    {
         return "Hej";
     }
 }
