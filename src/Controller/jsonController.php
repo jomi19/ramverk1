@@ -4,6 +4,7 @@ namespace Joakim\Controller;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
+use Joakim\Ip\Ip;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -24,32 +25,19 @@ class JsonController implements ContainerInjectableInterface
 
     public function indexActionPost()
     {
-        $valid = false;
-        $type = "IPV6";
-        $hostName = false;
         $json = [ "type" => "Invalid ip"];
 
-        if (!isset($_POST["ip"])) {
+        
+        if (!isset($_POST["ip"]) || strlen($_POST["ip"]) < 1) {
             $json = ["type" => "No ip"];
             return [$json];
         }
 
         $ipAdress = $_POST["ip"];
-        if (filter_var($ipAdress, FILTER_VALIDATE_IP)) {
-            if (filter_var($ipAdress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-                $type = "IPV4";
-                $hostName = gethostbyaddr($ipAdress);
-            }
-            $valid = true;
-            $json = ["type" => $type,
-                "hostName" => $hostName
-            ];
+        $ipData = new Ip();
+        $data = $ipData->getIp($ipAdress);
 
-            return [$json];
-        }
-
-
-        return [$json];
+        return [$data];
     }
 
     public function indexAction()

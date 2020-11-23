@@ -16,16 +16,20 @@ use function Anax\View\url;
 <h1>Ip validation</h1>
 <p>Here can you check if an ip adress is valid</p>
 <form method="post" action=<?= url("ip/") ?>>
-    <input type="text" name="ip">
+    <input type="text" name="ip" value=<?= $client ?>>
     <input type="submit" value="Check">
     <input type="submit" name="ip" value="185.49.132.3">
-    <input type="submit" name="ip" value="2001:0db8:85a3:0000:0000:8a2e:0370:7334">
+    <input type="submit" name="ip" value="2001:db8:85a3:8d3:1319:8a2e:370:7348">
+    <?= var_dump($ipData) ?>
     <?php if ($check) : ?>
         <?php if ($valid) : ?>
-            <p class="valid">Valid ip (IPV<?= $type ?>)</p>
-            <?php if ($hostName) : ?>
-                <p><?= $hostName ?></p>
+            <p class="valid">Valid ip (<?= $ipData["type"] ?>)</p>
+            <?php if ($ipData["hostName"]) : ?>
+                <p><?= $ipData["hostName"] ?></p>
             <?php endif; ?>
+            <p>
+                <?= $ipData["location"]["country_flag_emoji"] . $ipData["country_name"] .  " "  . $ipData["city"] ?>
+            <p>
         <?php else : ?>
             <p class="invalid">Not valid ip</p>
         <?php endif; ?>
@@ -40,7 +44,7 @@ use function Anax\View\url;
     <input type="text" name="ip">
     <input type="submit" value="Check">
     <input type="submit" name="ip" value="185.49.132.3">
-    <input type="submit" name="ip" value="2001:0db8:85a3:0000:0000:8a2e:0370:7334">
+    <input type="submit" name="ip" value="2001:db8:85a3:8d3:1319:8a2e:370:7348">
 </form>
 <h3>
        POST <?= url("jsonip")  ?>

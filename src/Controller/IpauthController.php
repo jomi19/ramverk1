@@ -4,6 +4,7 @@ namespace Joakim\Controller;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
+use Joakim\Ip\Ip;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -24,45 +25,39 @@ class IpauthController implements ContainerInjectableInterface
 
     public function indexActionPost() : object
     {
-        $ipAdress = $_POST["ip"];
-        $valid = false;
-        $type = 6;
-        $hostName = false;
+        $ipAdress = $_POST["ip"] ?? false;
+        $title = "Validating " . $ipAdress;
+        $ipData = new Ip();
+        $data = $ipData->getIp($ipAdress);
+        $valid = filter_var($ipAdress, FILTER_VALIDATE_IP);
 
-        if (filter_var($ipAdress, FILTER_VALIDATE_IP)) {
-            if (filter_var($ipAdress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-                $type = 4;
-                $hostName = gethostbyaddr($ipAdress);
-            }
-            $valid = true;
-        }
-
+        
         $page = $this->di->get("page");
-
         $page->add("joakim/ip/index", [
             "valid" => $valid,
             "check" => true,
-            "type" => $type,
-            "hostName" => $hostName
+            "ipData" => $data,
+            "client" => $ipAdress
         ]);
 
-        
         return $page->render([
-            "title" => "Hejsan",
+            "title" => $title,
 
         ]);
     }
 
     public function indexAction() : object
     {
-        $title = "Stylechooser";
+        $title = "Ip validation";
         $page = $this->di->get("page");
-
+        $clientIp = new Ip();
+        $clientIp = $clientIp->getClientIp();
         
         // $active = $session->get(self::$key, null);
 
         $page->add("joakim/ip/index", [
-            "check" => false
+            "check" => false,
+            "client" => $clientIp
         ]);
 
         return $page->render([
