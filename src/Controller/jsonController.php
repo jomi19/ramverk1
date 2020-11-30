@@ -23,11 +23,10 @@ class JsonController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
-    public function indexActionPost()
+    public function dataActionPost()
     {
         $json = [ "type" => "Invalid ip"];
 
-        
         if (!isset($_POST["ip"]) || strlen($_POST["ip"]) < 1) {
             $json = ["type" => "No ip"];
             return [$json];

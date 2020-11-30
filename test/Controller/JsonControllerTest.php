@@ -41,11 +41,13 @@ class JsonControllerTest extends TestCase
                 unset($_POST);
             }
 
-            $res = $this->controller->indexActionPost();
-            echo("Testing " . $testCase["ip"]);
+            $res = $this->controller->dataActionPost();
             $this->assertEquals($testCase["result"], $res[0]["type"]);
+            if (strlen($testCase["ip"] > 1)) {
+                $this->assertEquals($testCase["ip"], $res[0]["ip"]);
+            }
             if (isset($testCase["hostName"])) {
-                $this->assertContains($testCase["hostName"], $res[0]["hostName"]);
+                $this->assertContains($testCase["hostName"], $res[0]["host_name"]);
             }
         }
     }

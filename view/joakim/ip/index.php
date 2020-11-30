@@ -20,15 +20,14 @@ use function Anax\View\url;
     <input type="submit" value="Check">
     <input type="submit" name="ip" value="185.49.132.3">
     <input type="submit" name="ip" value="2001:db8:85a3:8d3:1319:8a2e:370:7348">
-    <?= var_dump($ipData) ?>
     <?php if ($check) : ?>
         <?php if ($valid) : ?>
             <p class="valid">Valid ip (<?= $ipData["type"] ?>)</p>
-            <?php if ($ipData["hostName"]) : ?>
-                <p><?= $ipData["hostName"] ?></p>
+            <?php if ($ipData["host_name"]) : ?>
+                <p><?= $ipData["host_name"] ?></p>
             <?php endif; ?>
             <p>
-                <?= $ipData["location"]["country_flag_emoji"] . $ipData["country_name"] .  " "  . $ipData["city"] ?>
+                <?= $ipData["location"]["flag"] . " " . $ipData["location"]["country"] .  " "  . $ipData["location"]["city"] ?>
             <p>
         <?php else : ?>
             <p class="invalid">Not valid ip</p>
@@ -40,14 +39,14 @@ use function Anax\View\url;
 </form>
 
 <h2>Get Json-response</h2>
-<form method="post" action=<?= url("jsonip/") ?>>
+<form method="post" action=<?= url("jsonip/data") ?>>
     <input type="text" name="ip">
     <input type="submit" value="Check">
     <input type="submit" name="ip" value="185.49.132.3">
     <input type="submit" name="ip" value="2001:db8:85a3:8d3:1319:8a2e:370:7348">
 </form>
 <h3>
-       POST <?= url("jsonip")  ?>
+       POST <?= url("jsonip/data")  ?>
 </h3>
 <p>
        Body ip: The ip you want to check up
