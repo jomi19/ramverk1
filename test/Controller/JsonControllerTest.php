@@ -1,8 +1,8 @@
 <?php
 
-namespace Anax\Controller;
+namespace Joakim\Controller;
 
-use Joakim\Ip\Ip;
+use Joakim\Model\Ip;
 use Joakim\Controller\JsonController;
 use Anax\DI\DIFactoryConfig;
 use PHPUnit\Framework\TestCase;
@@ -12,21 +12,24 @@ use PHPUnit\Framework\TestCase;
  */
 class JsonControllerTest extends TestCase
 {
+    protected $controller;
+
     protected function setUp(): void
     {
         // Init service container $di to contain $app as a service
         $di = new DIFactoryConfig();
-        $app = $di;
-        $di->set("app", $app);
+        $di->loadServices(ANAX_INSTALL_PATH . "/config/di");
+        $di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
 
+        $this->di = $di;
         // Create and initiate the controller
         $this->controller = new JsonController();
-        $this->ip = new Ip();
+        $this->controller->setDI($this->di);
     }
     /**
      * Test the route "index".
      */
-    public function testIndexActionPost()
+    public function testDataActionPost()
     {
         $test = [
             ["ip" => "fel ip", "result" => "Invalid ip"],
@@ -42,6 +45,7 @@ class JsonControllerTest extends TestCase
             }
 
             $res = $this->controller->dataActionPost();
+
             $this->assertEquals($testCase["result"], $res[0]["type"]);
             if (strlen($testCase["ip"] > 1)) {
                 $this->assertEquals($testCase["ip"], $res[0]["ip"]);

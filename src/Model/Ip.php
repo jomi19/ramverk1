@@ -1,9 +1,16 @@
 <?php
 
-namespace Joakim\Ip;
+namespace Joakim\Model;
+
+use Anax\Commons\ContainerInjectableInterface;
+use Anax\Commons\ContainerInjectableTrait;
 
 class Ip
 {
+    use ContainerInjectableTrait;
+    
+    private $apiKey;
+
     private function getHostName($ipAddress, $type)
     {
         if ($type === "ipv4") {
@@ -11,7 +18,7 @@ class Ip
         }
     }
 
-    private function formatOutput($data)
+    private function formatOutput($data) : array
     {
         $hostName = $this->getHostName($data["ip"], $data["type"]);
         $output = [
@@ -31,9 +38,15 @@ class Ip
 
         return $output;
     }
-    public function getIp($ipAdress)
+
+    public function setApiKey($api)
     {
-        $api = "fae623e018fe3c86833523c261d71f73";
+        $this->apiKey = $api;
+    }
+
+    public function getIp($ipAdress) : array
+    {
+        $api = $this->apiKey;
         $url = "http://api.ipstack.com/" .  $ipAdress . "?access_key=" . $api;
 
         $curl = curl_init();

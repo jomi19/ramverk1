@@ -44,9 +44,9 @@ return [
             "title" => "Välj stylesheet.",
         ],
         [
-            "text" => "Verktyg",
-            "url" => "verktyg",
-            "title" => "Verktyg och möjligheter för utveckling.",
+            "text" => "Väder",
+            "url" => "weather",
+            "title" => "Väder api.",
         ],
         [
             "text" => "Ip",

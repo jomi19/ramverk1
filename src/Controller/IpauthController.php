@@ -27,7 +27,7 @@ class IpauthController implements ContainerInjectableInterface
     {
         $ipAdress = $_POST["ip"] ?? false;
         $title = "Validating " . $ipAdress;
-        $ipData = new Ip();
+        $ipData = $this->di->get("ip");
         $data = $ipData->getIp($ipAdress);
         $valid = filter_var($ipAdress, FILTER_VALIDATE_IP);
 
@@ -50,7 +50,7 @@ class IpauthController implements ContainerInjectableInterface
     {
         $title = "Ip validation";
         $page = $this->di->get("page");
-        $clientIp = new Ip();
+        $clientIp = $this->di->get("ip");
         $clientIp = $clientIp->getClientIp();
         
         // $active = $session->get(self::$key, null);
